@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import TenantListView
+from .views import TenantListView, TenantDetailView
 
 app_name = 'tenants'
 
 urlpatterns = [
-    # List view now at root of this app
     path('', TenantListView.as_view(), name='tenant_list'),
+    path('<int:pk>/', TenantDetailView.as_view(), name='tenant_detail'),
 ]
