@@ -80,3 +80,5 @@ docker-compose.override.yml
 *.dump
 *.tar.gz
 *.zip
+
+property_management/media/property_videos/*.mp4
