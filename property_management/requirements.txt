@@ -4,4 +4,6 @@ Pillow
 gunicorn
 whitenoise
 python-dotenv  # ← Add this line!
+dj-database-url
+
 
