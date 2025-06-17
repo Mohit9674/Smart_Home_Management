@@ -1,1 +1,4 @@
-gunicorn property_management.wsgi --chdir Smart_Home_Management/property_management --log-file -
+web: gunicorn property_management.wsgi \
+       --chdir property_management \
+       --bind 0.0.0.0:$PORT \
+       --log-file -
