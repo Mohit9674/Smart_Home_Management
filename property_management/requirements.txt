@@ -5,5 +5,8 @@ gunicorn
 whitenoise
 python-dotenv  # ← Add this line!
 dj-database-url
+cloudinary
+django-cloudinary-storage
+
 
 
