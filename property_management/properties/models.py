@@ -14,7 +14,6 @@ class Property(models.Model):
     contract_length = models.IntegerField(help_text="Contract length in months", default=0)
 
     property_video  = models.FileField(
-        upload_to='property_videos/',
         blank=True,
         null=True,
         help_text="Optional video tour of the property"
@@ -39,7 +38,7 @@ class PropertyImage(models.Model):
         on_delete=models.CASCADE,
         related_name='images'
     )
-    image    = models.ImageField(upload_to='property_images/')
+    image    = models.ImageField()
     caption  = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
