@@ -3,3 +3,5 @@ psycopg2-binary
 Pillow
 gunicorn
 whitenoise
+python-dotenv  # ← Add this line!
+
