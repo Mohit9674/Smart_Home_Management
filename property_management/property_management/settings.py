@@ -11,27 +11,32 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+# Load env
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# URL prefix for static files
-STATIC_URL = '/static/'
+load_dotenv(BASE_DIR / '.env')
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',        # your custom css/js live here
-]
+
+# SECURITY
+SECRET_KEY   = os.getenv('SECRET_KEY')
+DEBUG        = os.getenv('DEBUG', 'False') == 'True'
+ALLOWED_HOSTS= os.getenv('ALLOWED_HOSTS', '').split(',')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9rwz4h*-k2g4t(bdvzi1ojnntqmi@20a+9t=hvi8=g*wn5!=#u'
+# SECRET_KEY = 'django-insecure-9rwz4h*-k2g4t(bdvzi1ojnntqmi@20a+9t=hvi8=g*wn5!=#u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -49,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,12 +86,24 @@ WSGI_APPLICATION = 'property_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# PostgreSQL via env
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE'  : 'django.db.backends.postgresql',
+        'NAME'    : os.getenv('POSTGRES_DB'),
+        'USER'    : os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST'    : os.getenv('POSTGRES_HOST'),
+        'PORT'    : os.getenv('POSTGRES_PORT'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -123,6 +141,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',        # your custom css/js live here
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -133,4 +157,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files (for Property.pictures)
 MEDIA_URL = '/'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
