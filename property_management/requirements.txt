@@ -3,7 +3,7 @@ psycopg2-binary
 Pillow
 gunicorn
 whitenoise
-python-dotenv  # ← Add this line!
+python-dotenv
 dj-database-url
 cloudinary
 django-cloudinary-storage
