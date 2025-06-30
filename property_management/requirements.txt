@@ -1,9 +1,10 @@
 # requirements.txt
-Django>=5.2.3
+django
 psycopg2-binary
 Pillow
 gunicorn
 whitenoise
 python-dotenv
 dj-database-url
-django-storages[boto3]>=1.14.0
+django-storages
+boto3
