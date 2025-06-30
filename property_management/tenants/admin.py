@@ -20,4 +20,5 @@ class TenantAdmin(admin.ModelAdmin):
     search_fields = (
         'full_name',
         'email',
+        'property',
     )
