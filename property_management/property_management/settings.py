@@ -162,9 +162,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Media files (for Property.pictures)
-MEDIA_URL = '/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # Media via DO Spaces
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
