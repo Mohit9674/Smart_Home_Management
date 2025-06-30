@@ -159,7 +159,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 DEFAULT_FILE_STORAGE   = 'property_management.custom_storage.DigitalOceanMediaStorage'
-MEDIA_URL               = os.getenv("MEDIA_URL")
+MEDIA_URL             = f"https://{os.getenv('AWS_STORAGE_BUCKET_NAME')}.{os.getenv('DO_SPACES_REGION')}.digitaloceanspaces.com/"
 
 AWS_S3_ENDPOINT_URL     = os.getenv("DO_SPACES_ENDPOINT")      # e.g. https://lon1.digitaloceanspaces.com
 AWS_S3_REGION_NAME      = os.getenv("DO_SPACES_REGION")        # e.g. lon1
