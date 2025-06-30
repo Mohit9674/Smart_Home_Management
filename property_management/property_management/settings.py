@@ -153,11 +153,11 @@ STATIC_URL  = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # 2. AWS / DO Spaces configuration
-AWS_ACCESS_KEY_ID       = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY   = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY_ID       = os.getenv("DO_SPACES_KEY")
+AWS_SECRET_ACCESS_KEY   = os.getenv("DO_SPACES_SECRET")
 AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL     = os.getenv("AWS_S3_ENDPOINT_URL")
-AWS_S3_REGION_NAME      = os.getenv("AWS_S3_REGION_NAME")
+AWS_S3_ENDPOINT_URL     = os.getenv("DO_SPACES_ENDPOINT")
+AWS_S3_REGION_NAME      = os.getenv("DO_SPACES_REGION")
 
 AWS_DEFAULT_ACL              = 'public-read'
 AWS_QUERYSTRING_AUTH        = False
