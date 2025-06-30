@@ -158,29 +158,24 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-# Media via DO Spaces
-# 1. The “region” endpoint:
-AWS_S3_REGION_NAME    = os.getenv("DO_SPACES_REGION")           # e.g. "lon1"
-AWS_S3_ENDPOINT_URL   = os.getenv("DO_SPACES_ENDPOINT")         # e.g. "https://lon1.digitaloceanspaces.com"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-# 2. Credentials & bucket
+AWS_S3_ENDPOINT_URL     = os.getenv("DO_SPACES_ENDPOINT")     # e.g. "https://lon1.digitaloceanspaces.com"
 AWS_ACCESS_KEY_ID       = os.getenv("DO_SPACES_KEY")
 AWS_SECRET_ACCESS_KEY   = os.getenv("DO_SPACES_SECRET")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")  # "smart-home-bucket"
+AWS_S3_REGION_NAME      = os.getenv("DO_SPACES_REGION")       # e.g. "lon1"
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME") # e.g. "smart-home-bucket"
 
-# 3. Make all uploads public and cache for a day
-AWS_DEFAULT_ACL            = "public-read"
-AWS_S3_OBJECT_PARAMETERS   = {"CacheControl": "max-age=86400"}
+# so that .url() returns https://<bucket>.<region>.digitaloceanspaces.com/<key>
+AWS_S3_CUSTOM_DOMAIN    = (
+    f"{AWS_STORAGE_BUCKET_NAME}."
+    f"{AWS_S3_ENDPOINT_URL.replace('https://','')}"
+)
 
-# 4. Disable querystring auth so URLs are clean
-AWS_QUERYSTRING_AUTH       = False
+# turn off signed URLs on public buckets
+AWS_QUERYSTRING_AUTH    = False
 
-# 5. Signature v4 (required by DigitalOcean)
-AWS_S3_SIGNATURE_VERSION   = "s3v4"
-
-# 6. Tell Django to use Spaces for FileFields
-DEFAULT_FILE_STORAGE       = "storages.backends.s3boto3.S3Boto3Storage"
-
-# 7. Build the “public domain” (so .url() works)
-AWS_S3_CUSTOM_DOMAIN       = f"{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_REGION_NAME}.digitaloceanspaces.com"
-MEDIA_URL                  = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+# optional cache headers
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400",
+}
