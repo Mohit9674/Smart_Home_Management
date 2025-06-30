@@ -10,6 +10,7 @@ class Tenant(models.Model):
         related_name='tenants'
     )
     # Allow this to be NULL so existing rows don’t need a default
+    notice_date     = models.DateField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     move_in_date    = models.DateField(blank=True, null=True)
@@ -17,7 +18,6 @@ class Tenant(models.Model):
     notice_date     = models.DateField(blank=True, null=True)
     full_name       = models.CharField(max_length=200, blank=True, null=True)
     email           = models.EmailField(blank=True, null=True)
-    address_of_property = models.CharField(max_length=200, blank=True, null=True)
     phone_number    = models.CharField(max_length=20, blank=True, null=True)
     pps_number      = models.CharField(max_length=50, blank=True, null=True)
     passport_upload = models.FileField(upload_to='tenant_passports/', blank=True, null=True)

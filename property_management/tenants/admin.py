@@ -4,14 +4,14 @@ from .models import Tenant
 @admin.register(Tenant)
 class TenantAdmin(admin.ModelAdmin):
     list_display = (
-        'timestamp',
-        'property',        # not property_address
         'full_name',
+        'property',        # not property_address
         'email',
         'smoker',          # not is_smoker
         'current_income',  # not current_in
         'license_fee',
         'deposit',
+        'timestamp',
     )
     list_filter = (
         'smoker',
