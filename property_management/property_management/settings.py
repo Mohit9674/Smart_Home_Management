@@ -158,24 +158,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-DEFAULT_FILE_STORAGE   = 'property_management.custom_storage.DigitalOceanMediaStorage'
-MEDIA_URL             = f"https://{os.getenv('AWS_STORAGE_BUCKET_NAME')}.{os.getenv('DO_SPACES_REGION')}.digitaloceanspaces.com/"
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = f"https://{os.getenv('AWS_STORAGE_BUCKET_NAME')}.{os.getenv('DO_SPACES_REGION')}.digitaloceanspaces.com/"
 
-AWS_S3_ENDPOINT_URL     = os.getenv("DO_SPACES_ENDPOINT")      # e.g. https://lon1.digitaloceanspaces.com
-AWS_S3_REGION_NAME      = os.getenv("DO_SPACES_REGION")        # e.g. lon1
-AWS_ACCESS_KEY_ID       = os.getenv("DO_SPACES_KEY")
-AWS_SECRET_ACCESS_KEY   = os.getenv("DO_SPACES_SECRET")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")  # e.g. smart-home
+AWS_ACCESS_KEY_ID = os.getenv("DO_SPACES_KEY")
+AWS_SECRET_ACCESS_KEY = os.getenv("DO_SPACES_SECRET")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = os.getenv("DO_SPACES_ENDPOINT")
+AWS_S3_REGION_NAME = os.getenv("DO_SPACES_REGION")
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_REGION_NAME}.digitaloceanspaces.com"
+
 AWS_DEFAULT_ACL = 'public-read'
-
-# Optional but recommended
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=86400",
-    "ACL": "public-read"  # Redundant but safe
 }
-
-
-# ensure compatibility with DO Spaces
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-AWS_QUERYSTRING_AUTH     = False
-AWS_S3_CUSTOM_DOMAIN     = os.getenv("AWS_S3_CUSTOM_DOMAIN")
+AWS_QUERYSTRING_AUTH = False
