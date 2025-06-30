@@ -144,8 +144,31 @@ USE_I18N = True
 
 USE_TZ = True
 
+AWS_ACCESS_KEY_ID = os.getenv("DO_SPACES_KEY")  # Changed to match .env
+AWS_SECRET_ACCESS_KEY = os.getenv("DO_SPACES_SECRET")  # Changed to match .env
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = os.getenv("DO_SPACES_ENDPOINT")  # Changed to match .env
+AWS_S3_REGION_NAME = os.getenv("DO_SPACES_REGION")  # Changed to match .env
+
+# Add these critical settings
+AWS_LOCATION = 'media'  # Creates a folder in your bucket
+AWS_DEFAULT_ACL = 'public-read'  # Makes files publicly accessible
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+AWS_QUERYSTRING_AUTH = False
+
+# Use custom domain for URLs
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_REGION_NAME}.digitaloceanspaces.com"
+
+# Media URL configuration
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+
+# MUST set the storage backend
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
 
 # Static files (CSS, JavaScript, Images)
+
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
@@ -156,18 +179,4 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
-AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
-AWS_QUERYSTRING_AUTH = False
-
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
