@@ -21,13 +21,13 @@ class Property(models.Model):
 
     maintenance     = models.TextField(blank=True)
     rooms           = models.IntegerField(default=0)
-    bathrooms       = models.DecimalField(default=0)
+    bathrooms       = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     type            = models.CharField(max_length=50, blank=True)
-    rent            = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    rent_margin     = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    actual_margin   = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    profit          = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-    real_profit     = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    rent            = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    rent_margin     = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    actual_margin   = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    profit          = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    real_profit     = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.street_number} {self.street_name}"
