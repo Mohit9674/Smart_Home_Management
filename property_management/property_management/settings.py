@@ -90,21 +90,33 @@ WSGI_APPLICATION = 'property_management.wsgi.application'
 
 # PostgreSQL via env
 
+# Load .env only for local dev (don’t load it in App Platform)
+if os.getenv("ENV", "").lower() != "production":
+    load_dotenv(BASE_DIR / ".env")
 
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 DATABASES = {
-    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+    "default": dj_database_url.config(
+        env="DATABASE_URL",          # DO injects this when you link a Managed DB
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
-DATABASES = {
-    'default': {
-        'ENGINE'  : 'django.db.backends.postgresql',
-        'NAME'    : os.getenv('POSTGRES_DB'),
-        'USER'    : os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST'    : os.getenv('POSTGRES_HOST'),
-        'PORT'    : os.getenv('POSTGRES_PORT'),
-    }
-}
+
+# DATABASES = {
+#     'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE'  : 'django.db.backends.postgresql',
+#         'NAME'    : os.getenv('POSTGRES_DB'),
+#         'USER'    : os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST'    : os.getenv('POSTGRES_HOST'),
+#         'PORT'    : os.getenv('POSTGRES_PORT'),
+#     }
+# }
 
 # DATABASES = {
 #     'default': {
