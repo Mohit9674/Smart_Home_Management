@@ -119,7 +119,8 @@ USE_TZ = True
 # -----------------------------------------------------------------------------
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
+# Don’t crash if a referenced file is missing from the manifest
+WHITENOISE_MANIFEST_STRICT = False
 USE_S3 = os.getenv("USE_S3", "0") == "1"  # flip to 1 in DO after Spaces is configured
 
 if USE_S3:
